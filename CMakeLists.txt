@@ -43,6 +43,7 @@ endif()
 
 add_subdirectory(Ute)
 add_subdirectory(Janus)
+add_subdirectory(Python)
 
 option(BUILD_TOOLS "Build tools executables" OFF)
 if (BUILD_TOOLS)

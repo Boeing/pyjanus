@@ -22,15 +22,28 @@
 # SOFTWARE.
 #
 
-cmake_minimum_required(VERSION 3.4)
-project(pyJanus)
+include README.md LICENCE.md
 
-add_subdirectory(pybind11)
-pybind11_add_module(pyJanus src/pyJanus.cpp)
 
-target_link_libraries(pyJanus PUBLIC Janus)
+recursive-include Janus *.cpp *.h *.txt CMakeLists.txt
+recursive-include Ute   *.cpp *.h *.hpp *.txt CMakeLists.txt
 
-target_compile_definitions(
-  pyJanus
-  PRIVATE VERSION_INFO=${PY_VERSION_INFO}
-)
+include ThirdParty/dirent/dirent.h
+
+include ThirdParty/pugixml/DSTG_Readme.txt
+include ThirdParty/pugixml/pugixml.cpp
+include ThirdParty/pugixml/pugixml.hpp
+include ThirdParty/pugixml/readme.txt
+
+include ThirdParty/qhull/CMakeLists.txt
+include ThirdParty/qhull/COPYING.txt
+include ThirdParty/qhull/src/libqhull_r/*.c
+include ThirdParty/qhull/src/libqhull_r/*.h
+include ThirdParty/qhull/src/libqhullcpp/*.cpp
+include ThirdParty/qhull/src/libqhullcpp/*.h
+
+include Python/pybind11/LICENSE
+recursive-include Python/pybind11/include *.h
+recursive-include Python/pybind11/tools *
+
+recursive-include Python/src *

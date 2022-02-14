@@ -30,7 +30,7 @@
 cmake_minimum_required(VERSION 3.1)
 
 project(Janus
-	VERSION 2.3.0 
+	VERSION 2.3.0
 	LANGUAGES C CXX
 )
 
@@ -51,10 +51,10 @@ endif()
 
 option(BUILD_EXAMPLES "Build example executables" OFF)
 if (BUILD_EXAMPLES)
-  add_subdirectory(Examples)
+	add_subdirectory(Examples)
 endif()
 
-option(PYBIND_LIB "Build Python bindings" OFF)
-if(PYBIND_LIB)
+option(BUILD_PYBINDINGS "Build Python bindings" OFF)
+if(BUILD_PYBINDINGS)
 	add_subdirectory(Python)
 endif()

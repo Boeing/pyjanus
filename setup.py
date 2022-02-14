@@ -1,4 +1,5 @@
 # Adapted from https://github.com/pybind/cmake_example
+
 #
 # Copyright (c) 2016 The Pybind Development Team, All rights reserved.
 #
@@ -36,6 +37,7 @@
 # license to install, use, modify, prepare derivative works, incorporate into
 # other computer software, distribute, and sublicense such enhancements or
 # derivative works thereof, in binary and source code form.
+#
 
 import os
 import re
@@ -85,6 +87,9 @@ class CMakeBuild(build_ext):
             f"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={extdir}",
             f"-DPYTHON_EXECUTABLE={sys.executable}",
             f"-DCMAKE_BUILD_TYPE={cfg}",  # not used on MSVC, but no harm
+            "-DBUILD_EXAMPLES=ON",
+            "-DPYBIND11_BUILD_TESTS=ON",
+            "-DBUILD_PYBINDINGS=ON",
         ]
         build_args = []
         # Adding CMake arguments set as environment variable
@@ -168,7 +173,7 @@ setup(
     name="pyJanus",
     version="0.0.1",
     author="Alwin Wang",
-    author_email="dean0x7d@gmail.com",
+    author_email="16846521+AlwinW@users.noreply.github.com",
     description="python bindings for Janus",
     long_description="python bindings for Janus",
     ext_modules=[CMakeExtension("pyJanus")],

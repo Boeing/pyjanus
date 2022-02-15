@@ -25,8 +25,8 @@
 include README.md LICENCE.md
 
 
-recursive-include Janus *.cpp *.h *.txt CMakeLists.txt
-recursive-include Ute   *.cpp *.h *.hpp *.txt CMakeLists.txt
+recursive-include Janus *.cpp *.h *.txt
+recursive-include Ute   *.cpp *.h *.hpp *.txt
 
 include ThirdParty/dirent/dirent.h
 
@@ -46,4 +46,6 @@ include Python/pybind11/LICENSE
 recursive-include Python/pybind11/include *.h
 recursive-include Python/pybind11/tools *
 
-recursive-include Python/src *
+include Python/CMakeLists.txt
+include Python/README.md
+recursive-include Python/src *.cpp *.hpp

@@ -26,7 +26,7 @@ cmake_minimum_required(VERSION 3.4)
 project(pyJanus)
 
 add_subdirectory(pybind11)
-pybind11_add_module(pyJanus src/pyJanus.cpp)
+pybind11_add_module(pyJanus src/pyJanus.cpp src/pyrepr.hpp)
 
 target_link_libraries(pyJanus PUBLIC Janus)
 

@@ -46,40 +46,102 @@ using overload_cast_ = py::detail::overload_cast_impl<Args...>;
 PYBIND11_MODULE(pyJanus, m)
 {
     py::class_<aString>(m, "aString")
-        .def(py::init<const std::string &>());
+        .def(py::init<const std::string &>())
+        .def("__repr__",
+             [](const aString &self)
+             {
+                 std::ostringstream out;
+                 out << "aString('" << self << "')";
+                 return out.str();
+             })
+        .def("__str__",
+             [](const aString &self)
+             {
+                 std::ostringstream out;
+                 out << self;
+                 return out.str();
+             });
+    py::class_<aFileString, aString>(m, "aFileString")
+        .def(py::init<const std::string &>())
+        .def("__repr__",
+             [](const aFileString &self)
+             {
+                 std::ostringstream out;
+                 out << "aString('" << self << "')";
+                 return out.str();
+             })
+        .def("__str__",
+             [](const aFileString &self)
+             {
+                 std::ostringstream out;
+                 out << self;
+                 return out.str();
+             });
     py::implicitly_convertible<std::string, aString>();
+    py::implicitly_convertible<std::string, aFileString>();
 
     py::class_<VariableDef>(m, "VariableDef")
-        // .def(py::init<const std::string &>()), py::arg()
-        // .def("setValue", &setValue);
+        .def(py::init<Janus *, DomFunctions::XmlNode &>(),
+             py::arg("janus"), py::arg("element_definition"))
+
+        .def_property_readonly("janus", &VariableDef::getJanusInstance)
+        .def_property_readonly("name", &VariableDef::getName)
+        .def_property_readonly("var_id", &VariableDef::getName)
+        .def_property_readonly("units", &VariableDef::getUnits)
+        .def_property_readonly("initial_value", &VariableDef::getInitialValue)
+
+        .def("get_value", &VariableDef::getValue)
+        .def("set_value",
+             overload_cast_<const double &, bool>()(&VariableDef::setValue),
+             py::arg("value"), py::arg("is_forced") = false)
+
         .def("__repr__",
-             [](const VariableDef &self)
+             [](VariableDef &self)
              {
                  std::ostringstream out;
                  out << "VariableDef("
                      << "name='" << self.getName() << "', "
-                     << "varID='" << self.getVarID() << "', "
+                     << "var_id='" << self.getVarID() << "', "
                      << "units='" << self.getUnits() << "', "
-                     << "initialValue='" << self.getInitialValue() << "'"
-                     << ")";
+                     << "initial_value='" << self.getInitialValue() << "', "
+                     << "value='" << self.getValue() << "') "
+                     << "from JanusInstance<" << self.getJanusInstance() << ">";
+                 return out.str();
+             })
+        .def("__str__",
+             [](const VariableDef &self)
+             {
+                 std::ostringstream out;
+                 out << self.getName() << ": " << self.getValue() << " " << self.getUnits();
                  return out.str();
              });
 
-    // <variableDef name="angleOfAttack" varID="angleOfAttack" units="deg" initialValue="0.0">
-
     py::class_<Janus>(m, "Janus")
         .def(py::init<const std::string &>(), py::arg("filename"))
+
         .def("get_variabledef",
-             static_cast<VariableDefList &(Janus::*)()>(&Janus::getVariableDef))
+             overload_cast_<>()(&Janus::getVariableDef))
         .def("get_variabledef",
-             static_cast<VariableDef &(Janus::*)(const aString &)>(&Janus::getVariableDef))
-        .def_property("xml_filename", &Janus::getXmlFileName, nullptr)
-        .def("aString", [](const std::string &s)
-             { return s; })
+             overload_cast_<const aString &>()(&Janus::getVariableDef),
+             py::return_value_policy::reference)
+
+        .def_property_readonly("xml_filename", &Janus::getXmlFileName)
+
         .def("__repr__",
+             [](Janus &self)
+             {
+                 std::ostringstream out;
+                 out << "Janus(xml_filename='" << self.getXmlFileName() << ")"
+                     << " at JanusInstance<"
+                     << self.getVariableDef().front().getJanusInstance() << ">";
+                 return out.str();
+             })
+        .def("__str__",
              [](const Janus &self)
              {
-                 return "<pyJanus.Janus('" + self.getXmlFileName() + "')>";
+                 std::ostringstream out;
+                 out << "Janus(xml_filename='" << self.getXmlFileName() << ")";
+                 return out.str();
              });
 
 #ifdef VERSION_INFO

@@ -34,6 +34,6 @@ cmake --build build -j8
 
 ```console
 mkdir -p build
-cmake . -B build -DBUILD_PYBINDINGS=ON -DPY_VERSION_INFO=0.0.1
+cmake . -B build -DBUILD_PYBINDINGS=ON -DPY_VERSION_INFO=0.0.1 -DBUILD_EXAMPLES=ON
 cmake --build build -j8 --config Release
 ```

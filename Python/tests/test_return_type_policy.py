@@ -27,22 +27,16 @@ import pyJanus
 
 def test_return_type_policy():
     """
-    This checks pyJanus against the Examples/CombinedExample.cpp program
+    This checks any return value policies that are not on the default policy
+    `return_value_policy::automatic`
+
+    Reference: <https://pybind11.readthedocs.io/en/stable/advanced/functions.html#return-value-policies>
     """
     xml_path = "Examples/CombinedExample.xml"
     janus = pyJanus.Janus(xml_path)
 
     angle_of_attack = janus.get_variabledef("angleOfAttack")
-    reynolds_number = janus.get_variabledef("reynoldsNumber")
-    ambient_density = janus.get_variabledef("ambientDensity")
-    true_airspeed = janus.get_variabledef("trueAirspeed")
-    reference_area = janus.get_variabledef("referenceArea")
-    drag = janus.get_variabledef("drag")
 
-    angle_of_attack.set_value(10)
-    reynolds_number.set_value(0.36e6)
-    ambient_density.set_value(1.225)
-    true_airspeed.set_value(100.0)
-    reference_area.set_value(25.0)
-
-    assert round(drag.get_value() - 1531.25, 2) == 0
+    assert id(janus.get_variabledef()[0]) == id(angle_of_attack)
+    assert id(janus.get_variabledef("angleOfAttack")) == id(angle_of_attack)
+    assert id(angle_of_attack.janus) == id(janus)

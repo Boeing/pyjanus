@@ -56,7 +56,7 @@ minversion = "6.0"
 addopts = ["-ra", "--showlocals", "--strict-markers", "--strict-config"]
 xfail_strict = true
 filterwarnings = ["error"]
-testpaths = ["tests"]
+testpaths = ["Python/tests"]
 
 [tool.cibuildwheel]
 test-command = "pytest {project}/Python/tests"

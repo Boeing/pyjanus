@@ -171,7 +171,7 @@ class CMakeBuild(build_ext):
 # logic and declaration, and simpler if you include description/version in a file.
 setup(
     name="pyJanus",
-    version="0.0.1",
+    version="0.1.0",
     author="Alwin Wang",
     author_email="16846521+AlwinW@users.noreply.github.com",
     description="python bindings for Janus",
@@ -180,5 +180,5 @@ setup(
     cmdclass={"build_ext": CMakeBuild},
     zip_safe=False,
     extras_require={"test": ["pytest>=6.0"]},
-    python_requires=">=3.6",
+    python_requires=">=3.8",
 )

@@ -48,4 +48,4 @@ recursive-include Python/pybind11/tools *
 
 include Python/CMakeLists.txt
 include Python/README.md
-recursive-include Python/src *.cpp *.hpp
+recursive-include Python/src *.cpp

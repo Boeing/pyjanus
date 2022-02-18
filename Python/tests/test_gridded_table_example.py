@@ -25,20 +25,23 @@
 import pyJanus
 
 
-def test_return_type_policy():
+def test_gridded_table_example():
     """
-    This checks any return value policies that are not on the default policy
-    `return_value_policy::automatic`
-
-    Reference: <https://pybind11.readthedocs.io/en/stable/advanced/functions.html#return-value-policies>
+    This checks pyJanus against the Examples/GriddedTableExample.cpp program
     """
-    xml_path = "Examples/CombinedExample.xml"
+    xml_path = "Examples/GriddedTableExample.xml"
     janus = pyJanus.Janus(xml_path)
 
     angle_of_attack = janus.get_variabledef("angleOfAttack")
+    reynolds_number = janus.get_variabledef("reynoldsNumber")
+    drag_coefficient = janus.get_variabledef("dragCoefficient")
 
-    assert id(janus.get_variabledef()[0]) == id(angle_of_attack)
-    assert id(janus.get_variabledef("angleOfAttack")) == id(angle_of_attack)
-    assert id(angle_of_attack.janus) == id(janus)
+    angle_of_attack.set_value(10)
+    reynolds_number.set_value(0.36e6)
+    assert round(drag_coefficient.get_value() - 0.01, 2) == 0
 
-# Consider checking __repr__ and __str__
+    angle_of_attack.set_value(30)
+    assert round(drag_coefficient.get_value() - 0.58, 2) == 0
+
+    reynolds_number.set_value(0.70e6)
+    assert round(drag_coefficient.get_value() - 0.595, 3) == 0

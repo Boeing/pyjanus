@@ -25,7 +25,7 @@
 import pyJanus
 
 
-def test_return_type_policy():
+def test_combined_example():
     """
     This checks pyJanus against the Examples/CombinedExample.cpp program
     """

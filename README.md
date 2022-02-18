@@ -12,45 +12,26 @@ This repository contains the Janus library, a supporting library called Ute, and
 
 ## Build
 
-### Library Only
+From within the top-level directory you can instal pyJanus with pip
 
-From within the top-level directory:
+```console
+export MAKEFLAGS=-j8
+pip install --verbose .[test]
+```
 
- ```
- mkdir build
- cd build
- cmake ..
- make
- ```
+If you wish to only compile the .pyd you can run:
 
- For newer versions of CMake:
+```console
+mkdir build
+cmake . -B build -DBUILD_PYBINDINGS=ON -DPY_VERSION_INFO=dev -DBUILD_EXAMPLES=ON
+cmake --build build -j8 --config Release
+```
 
- ```
- mkdir build
- cmake . -B build [options]
- cmake --build build [options]
- ```
-
- When building with MSVC, use the "--config" flag to set the build type:
-
- ```
- cmake --build build --config [Release|Debug]
- ```
-
-### Library and Examples
-
-From within the top-level directory:
-
- ```
- mkdir build
- cd build
- cmake -DBUILD_EXAMPLES=ON ..
- make
- ```
-
- To run the examples, you will need to copy the XML files in the Examples/ directory to the location of the built binaries.
+See [build.md](./BUILD.md) for other options such as building only the Janus library.
 
 ## Primary Contributers
+
+## Janus Contributors
 
 - Geoff Brian
 - Shane Hill
@@ -62,7 +43,11 @@ From within the top-level directory:
 - Kylie Bedwell
 - Mike Grant
 
-## Licence
+## PyJanus Contributuers
+
+- Alwin Wang
+
+## Licences
 
 ### Janus Licence
 

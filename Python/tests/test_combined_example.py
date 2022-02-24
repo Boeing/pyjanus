@@ -45,4 +45,4 @@ def test_combined_example():
     true_airspeed.set_value(100.0)
     reference_area.set_value(25.0)
 
-    assert round(drag.get_value() - 1531.25, 2) == 0
+    assert round(drag.get_value(), 2) == 1531.25

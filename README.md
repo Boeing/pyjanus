@@ -12,14 +12,16 @@ This repository contains the Janus library, a supporting library called Ute, and
 
 ## Build
 
-From within the top-level directory you can instal pyJanus with pip
+From within the top-level directory you can instal pyJanus with pip:
 
 ```console
 export MAKEFLAGS=-j8
 pip install --verbose .[test]
 ```
 
-If you wish to only compile the .pyd you can run:
+To run tests, run `python -m pytest --verbose`
+
+If you wish to only compile the binary `pyJanus.pyd`, you can run:
 
 ```console
 mkdir build

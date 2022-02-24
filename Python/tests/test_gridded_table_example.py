@@ -38,10 +38,10 @@ def test_gridded_table_example():
 
     angle_of_attack.set_value(10)
     reynolds_number.set_value(0.36e6)
-    assert round(drag_coefficient.get_value() - 0.01, 2) == 0
+    assert round(drag_coefficient.get_value(), 2) ==  0.01
 
     angle_of_attack.set_value(30)
-    assert round(drag_coefficient.get_value() - 0.58, 2) == 0
+    assert round(drag_coefficient.get_value(), 2) == 0.58
 
     reynolds_number.set_value(0.70e6)
-    assert round(drag_coefficient.get_value() - 0.595, 3) == 0
+    assert round(drag_coefficient.get_value(), 3) == 0.595

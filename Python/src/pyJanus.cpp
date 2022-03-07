@@ -40,14 +40,18 @@ template <typename... Args>
 using overload_cast_ = py::detail::overload_cast_impl<Args...>;
 
 void init_aString(py::module &);
+void init_JanusVariable(py::module &);
+void init_JanusVariableManager(py::module &);
 void init_VariableDef(py::module &);
 
 PYBIND11_MODULE(pyJanus, m)
 {
     init_aString(m);
+    init_JanusVariable(m);
     init_VariableDef(m);
 
     py::class_<Janus>(m, "Janus")
+        .def(py::init<>())
         .def(py::init<const std::string &>(), py::arg("filename"))
 
         .def("get_variabledef",
@@ -75,20 +79,12 @@ PYBIND11_MODULE(pyJanus, m)
                  return out.str();
              });
 
+    // Import after py::class_<Janus> is wrapped
+    init_JanusVariableManager(m);
+
 #ifdef VERSION_INFO
     m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
 #else
     m.attr("__version__") = "dev";
 #endif
 }
-
-// cmake . -B build -DBUILD_PYBINDINGS=ON -DPY_VERSION_INFO=0.0.1
-// cmake --build build -j8 --config Release
-//
-// cd build/Python/Release
-//
-// ipython
-// import pyJanus
-// j = pyJanus.Janus("../../../Examples/CombinedExample.xml")
-// j.get_variabledef()
-// j.get_variabledef("angleOfAttack")

@@ -29,6 +29,8 @@ add_subdirectory(pybind11)
 pybind11_add_module(pyJanus
   src/pyaString.cpp
   src/pyJanus.cpp
+  src/pyJanusVariable.cpp
+  src/pyJanusVariableManager.cpp
   src/pyVariableDef.cpp
   )
 

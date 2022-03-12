@@ -23,24 +23,29 @@
 //
 
 #include <pybind11/pybind11.h>
-#include <Janus/Janus.h>
-#include <Janus/JanusVariableManager.h>
 
-using namespace janus;
+#define STRINGIFY(x) #x
+#define MACRO_STRINGIFY(x) STRINGIFY(x)
 
 namespace py = pybind11;
 
-template <typename... Args>
-using overload_cast_ = py::detail::overload_cast_impl<Args...>;
+void init_aString(py::module &);
+void init_Janus(py::module &);
+void init_JanusVariable(py::module &);
+void init_JanusVariableManager(py::module &);
+void init_VariableDef(py::module &);
 
-void init_JanusVariableManager(py::module_ &m)
+PYBIND11_MODULE(pyJanus, m)
 {
-  py::class_<JanusVariableManager, Janus>(m, "JanusVariableManager")
-      .def(py::init([](std::string filename)
-                    { JanusVariableManager jvm;
-                    jvm.setXmlFileName( filename);
-                    return jvm; }))
+  init_aString(m);
+  init_Janus(m);
+  init_JanusVariable(m);
+  init_JanusVariableManager(m);
+  init_VariableDef(m);
 
-      .def("push_back",
-           overload_cast_<const JanusVariable &>()(&JanusVariableManager::push_back), py::return_value_policy::reference);
+#ifdef VERSION_INFO
+  m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
+#else
+  m.attr("__version__") = "dev";
+#endif
 }

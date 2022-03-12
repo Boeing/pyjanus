@@ -29,39 +29,44 @@ using namespace dstoute;
 
 namespace py = pybind11;
 
-void init_aString(py::module_ &m) {
+void init_aString(py::module_ &m)
+{
   py::class_<aString>(m, "aString")
-        .def(py::init<const std::string &>())
-        .def("__repr__",
-             [](const aString &self)
-             {
-                 std::ostringstream out;
-                 out << "aString('" << self << "')";
-                 return out.str();
-             })
-        .def("__str__",
-             [](const aString &self)
-             {
-                 std::ostringstream out;
-                 out << self;
-                 return out.str();
-             });
-    py::class_<aFileString, aString>(m, "aFileString")
-        .def(py::init<const std::string &>())
-        .def("__repr__",
-             [](const aFileString &self)
-             {
-                 std::ostringstream out;
-                 out << "aString('" << self << "')";
-                 return out.str();
-             })
-        .def("__str__",
-             [](const aFileString &self)
-             {
-                 std::ostringstream out;
-                 out << self;
-                 return out.str();
-             });
-    py::implicitly_convertible<std::string, aString>();
-    py::implicitly_convertible<std::string, aFileString>();
+      .def(py::init<const std::string &>())
+
+      .def("__repr__",
+           [](const aString &self)
+           {
+             std::ostringstream out;
+             out << "aString('" << self << "')";
+             return out.str();
+           })
+      .def("__str__",
+           [](const aString &self)
+           {
+             std::ostringstream out;
+             out << self;
+             return out.str();
+           });
+
+  py::class_<aFileString, aString>(m, "aFileString")
+      .def(py::init<const std::string &>())
+
+      .def("__repr__",
+           [](const aFileString &self)
+           {
+             std::ostringstream out;
+             out << "aString('" << self << "')";
+             return out.str();
+           })
+      .def("__str__",
+           [](const aFileString &self)
+           {
+             std::ostringstream out;
+             out << self;
+             return out.str();
+           });
+
+  py::implicitly_convertible<std::string, aString>();
+  py::implicitly_convertible<std::string, aFileString>();
 }

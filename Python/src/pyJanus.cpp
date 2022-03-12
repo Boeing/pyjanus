@@ -28,9 +28,6 @@
 #include <Janus/Janus.h>
 #include <Ute/aString.h>
 
-#define STRINGIFY(x) #x
-#define MACRO_STRINGIFY(x) STRINGIFY(x)
-
 using namespace janus;
 using namespace dstoute;
 
@@ -39,52 +36,34 @@ namespace py = pybind11;
 template <typename... Args>
 using overload_cast_ = py::detail::overload_cast_impl<Args...>;
 
-void init_aString(py::module &);
-void init_JanusVariable(py::module &);
-void init_JanusVariableManager(py::module &);
-void init_VariableDef(py::module &);
-
-PYBIND11_MODULE(pyJanus, m)
+void init_Janus(py::module_ &m)
 {
-    init_aString(m);
-    init_JanusVariable(m);
-    init_VariableDef(m);
+  py::class_<Janus>(m, "Janus")
+      .def(py::init<>())
+      .def(py::init<const std::string &>(), py::arg("filename"))
 
-    py::class_<Janus>(m, "Janus")
-        .def(py::init<>())
-        .def(py::init<const std::string &>(), py::arg("filename"))
+      .def("get_variabledef",
+           overload_cast_<>()(&Janus::getVariableDef))
+      .def("get_variabledef",
+           overload_cast_<const aString &>()(&Janus::getVariableDef),
+           py::return_value_policy::reference)
 
-        .def("get_variabledef",
-             overload_cast_<>()(&Janus::getVariableDef))
-        .def("get_variabledef",
-             overload_cast_<const aString &>()(&Janus::getVariableDef),
-             py::return_value_policy::reference)
+      .def_property_readonly("xml_filename", &Janus::getXmlFileName)
 
-        .def_property_readonly("xml_filename", &Janus::getXmlFileName)
-
-        .def("__repr__",
-             [](Janus &self)
-             {
-                 std::ostringstream out;
-                 out << "Janus(xml_filename='" << self.getXmlFileName() << ")"
-                     << " at JanusInstance<"
-                     << self.getVariableDef().front().getJanusInstance() << ">";
-                 return out.str();
-             })
-        .def("__str__",
-             [](const Janus &self)
-             {
-                 std::ostringstream out;
-                 out << "Janus(xml_filename='" << self.getXmlFileName() << ")";
-                 return out.str();
-             });
-
-    // Import after py::class_<Janus> is wrapped
-    init_JanusVariableManager(m);
-
-#ifdef VERSION_INFO
-    m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
-#else
-    m.attr("__version__") = "dev";
-#endif
+      .def("__repr__",
+           [](Janus &self)
+           {
+             std::ostringstream out;
+             out << "Janus(xml_filename='" << self.getXmlFileName() << ")"
+                 << " at JanusInstance<"
+                 << self.getVariableDef().front().getJanusInstance() << ">";
+             return out.str();
+           })
+      .def("__str__",
+           [](const Janus &self)
+           {
+             std::ostringstream out;
+             out << "Janus(xml_filename='" << self.getXmlFileName() << ")";
+             return out.str();
+           });
 }

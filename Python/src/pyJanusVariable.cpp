@@ -35,6 +35,6 @@ using overload_cast_ = py::detail::overload_cast_impl<Args...>;
 
 void init_JanusVariable(py::module_ &m)
 {
-    py::class_<JanusVariable>(m, "JanusVariable")
-        .def(py::init<>());
+  py::class_<JanusVariable>(m, "JanusVariable")
+      .def(py::init<>());
 }

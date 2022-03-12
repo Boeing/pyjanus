@@ -35,6 +35,10 @@ using overload_cast_ = py::detail::overload_cast_impl<Args...>;
 
 void init_JanusVariableManager(py::module_ &m)
 {
+  py::class_<JanusIndex>(m, "JanusIndex")
+      .def(py::init<>());
+  // TODO: Implement repr and str
+
   py::class_<JanusVariableManager, Janus>(m, "JanusVariableManager")
       .def(py::init([](std::string filename)
                     { JanusVariableManager jvm;
@@ -42,5 +46,5 @@ void init_JanusVariableManager(py::module_ &m)
                     return jvm; }))
 
       .def("push_back",
-           overload_cast_<const JanusVariable &>()(&JanusVariableManager::push_back), py::return_value_policy::reference);
+           overload_cast_<const JanusVariable &>()(&JanusVariableManager::push_back));
 }

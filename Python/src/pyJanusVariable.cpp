@@ -25,8 +25,10 @@
 #include <pybind11/pybind11.h>
 #include <Janus/Janus.h>
 #include <Janus/JanusVariable.h>
+#include <Ute/aString.h>
 
 using namespace janus;
+using namespace dstoute;
 
 namespace py = pybind11;
 
@@ -35,6 +37,52 @@ using overload_cast_ = py::detail::overload_cast_impl<Args...>;
 
 void init_JanusVariable(py::module_ &m)
 {
+  m.attr("janusMandatory") = janusMandatory;
+  m.attr("janusRequired") = janusRequired;
+
   py::class_<JanusVariable>(m, "JanusVariable")
-      .def(py::init<>());
+      .def(py::init<const std::string &, JanusVariableType, bool, const double &>(),
+           py::arg("variable_name"),
+           py::arg("variable_type"),
+           py::arg("is_mandatory"),
+           py::arg("value"))
+      .def(py::init<const std::string &, JanusVariableType, bool, const std::string &, const double &>(),
+           py::arg("variable_name"),
+           py::arg("variable_type"),
+           py::arg("is_mandatory"),
+           py::arg("specific_units"),
+           py::arg("value"))
+
+      .def("__repr__",
+           [](JanusVariable &self)
+           {
+             std::ostringstream out;
+             out << "JanusVariable("
+                 << "name='" << self.getName() << "', "
+                 << "var_id='" << self.getVarID() << "', "
+                 << "units='" << self.getUnits() << "', "
+                 << "initial_value='" << self.getInitialValue() << "', "
+                 << "value='" << self.value() << "')";
+             return out.str();
+           })
+      .def("__str__",
+           [](const JanusVariable &self)
+           {
+             std::ostringstream out;
+             out << self.getName() << ": " << self.value() << " " << self.getUnits();
+             return out.str();
+           });
+
+  py::enum_<JanusVariableType>(m, "JanusVariableType")
+      .value("janusOutputVariable", JanusVariableType::janusOutputVariable)
+      .value("janusInputVariable", JanusVariableType::janusInputVariable)
+      .value("janusInputOutputVariable", JanusVariableType::janusInputOutputVariable)
+      .value("janusDeltaOutputVariable", JanusVariableType::janusDeltaOutputVariable)
+      .value("janusDeltaInputVariable", JanusVariableType::janusDeltaInputVariable)
+      .value("janusDeltaInputOutputVariable", JanusVariableType::janusDeltaInputOutputVariable)
+      .value("janusIgnoreUnitsOutputVariable", JanusVariableType::janusIgnoreUnitsOutputVariable)
+      .value("janusIgnoreUnitsInputVariable", JanusVariableType::janusIgnoreUnitsInputVariable)
+      .value("janusIgnoreUnitsInputOutputVariable", JanusVariableType::janusIgnoreUnitsInputOutputVariable)
+      .value("janusString", JanusVariableType::janusString)
+      .export_values();
 }

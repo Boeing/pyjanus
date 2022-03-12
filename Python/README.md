@@ -24,6 +24,14 @@ j = pyJanus.Janus("../../../Examples/CombinedExample.xml")
 j.get_variabledef()
 j.get_variabledef("angleOfAttack")
 # help(pyJanus.JanusVariableManager)
-jvm = pyJanus.JanusVariableManager("../../../Examples/CombinedExample.xml")
+
 jvm.get_variabledef()
+```
+
+```py
+import pyJanus
+jvm = pyJanus.JanusVariableManager("../../../Examples/JanusVariableManagerExample.xml")
+input00 = pyJanus.JanusVariable("input00", pyJanus.janusInputVariable, pyJanus.janusMandatory, "m s-1", 0.0)
+output00 = pyJanus.JanusVariable("output00", pyJanus.janusOutputVariable, pyJanus.janusMandatory, "kn", 0.0)
+jvm.push_back(input00)
 ```

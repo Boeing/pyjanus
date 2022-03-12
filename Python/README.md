@@ -6,7 +6,7 @@ cd Python
 pip install --verbose .[test]
 ```
 
-From the top level
+From the top level (maybe change to build_pyd)
 
 ```console
 rm -rf build
@@ -33,5 +33,8 @@ import pyJanus
 jvm = pyJanus.JanusVariableManager("../../../Examples/JanusVariableManagerExample.xml")
 input00 = pyJanus.JanusVariable("input00", pyJanus.janusInputVariable, pyJanus.janusMandatory, "m s-1", 0.0)
 output00 = pyJanus.JanusVariable("output00", pyJanus.janusOutputVariable, pyJanus.janusMandatory, "kn", 0.0)
-jvm.push_back(input00)
+jInput00 = jvm.push_back(input00)
+jOutput00 = jvm.push_back(output00)
+jv_input00 = jvm[jInput00]
+jv_output00 = jvm[jOutput00]
 ```

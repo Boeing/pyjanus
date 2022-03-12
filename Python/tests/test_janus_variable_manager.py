@@ -38,5 +38,45 @@ def test_janus_variable_manager_example_00():
     output00 = pyJanus.JanusVariable(
         "output00", pyJanus.janusOutputVariable, pyJanus.janusMandatory, "kn", 0.0
     )
+    jInput00 = jvm.push_back(input00)
+    jOutput00 = jvm.push_back(output00)
+    jv_input00 = jvm[jInput00]
+    jv_output00 = jvm[jOutput00]
 
-    jvm.push_back(input00)
+    assert jv_input00.is_available()
+    assert jv_output00.is_available()
+
+    assert round(jv_output00.get_value(), 0) == 0
+    assert jv_input00.set_value(1.0)
+    assert round(jv_output00.get_value(), 5) == 1.94384
+
+    assert jvm[jInput00].set_value(0.0)
+    assert round(jvm[jOutput00].get_value(), 0) == 0
+    assert jvm[jInput00].set_value(1.0)
+    assert round(jvm[jOutput00].get_value(), 5) == 1.94384
+
+
+def test_janus_variable_manager_example_01():
+    """
+    This checks pyJanus against the Examples/SetVarDefExample.cpp program 01
+    """
+    xml_path = "Examples/JanusVariableManagerExample.xml"
+    jvm = pyJanus.JanusVariableManager(xml_path)
+
+    input00 = pyJanus.JanusVariable(
+        "input00", pyJanus.janusInputVariable, pyJanus.janusMandatory, "m s-1", 0.0
+    )
+    output00 = pyJanus.JanusVariable(
+        "output00", pyJanus.janusOutputVariable, pyJanus.janusMandatory, "kn", 0.0
+    )
+    jInput00 = jvm.push_back(input00)
+    jOutput00 = jvm.push_back(output00)
+    jv_input00 = jvm[jInput00]
+    jv_output00 = jvm[jOutput00]
+
+    assert round(jv_output00.get_value(), 0) == 0
+    assert jv_input00.set_value(1.0)
+    assert round(jv_output00.get_value(), 5) == 1.94384
+    assert not jv_input00.set_value(1.0)
+    assert jv_input00.set_value(2.0)
+    assert round(jv_output00.get_value(), 5) == 3.88769

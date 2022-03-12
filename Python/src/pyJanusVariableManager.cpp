@@ -23,6 +23,8 @@
 //
 
 #include <pybind11/pybind11.h>
+#include <pybind11/operators.h>
+#include <pybind11/stl.h>
 #include <Janus/Janus.h>
 #include <Janus/JanusVariableManager.h>
 
@@ -41,10 +43,19 @@ void init_JanusVariableManager(py::module_ &m)
 
   py::class_<JanusVariableManager, Janus>(m, "JanusVariableManager")
       .def(py::init([](std::string filename)
-                    { JanusVariableManager jvm;
-                    jvm.setXmlFileName( filename);
-                    return jvm; }))
+                    {
+    JanusVariableManager jvm;
+    jvm.setXmlFileName(filename);
+    return jvm; }))
 
       .def("push_back",
-           overload_cast_<const JanusVariable &>()(&JanusVariableManager::push_back));
+           overload_cast_<const JanusVariable &>()(&JanusVariableManager::push_back))
+      .def("push_back",
+           overload_cast_<const std::vector<JanusVariable> &>()(&JanusVariableManager::push_back))
+
+      .def(
+          "__getitem__",
+          [](JanusVariableManager &jvm, const JanusIndex ji)
+          { return &jvm[ji]; },
+          py::return_value_policy::reference);
 }

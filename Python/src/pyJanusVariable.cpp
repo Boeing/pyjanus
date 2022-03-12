@@ -53,6 +53,21 @@ void init_JanusVariable(py::module_ &m)
            py::arg("specific_units"),
            py::arg("value"))
 
+      .def("is_initialised", &JanusVariable::isInitialised)
+      .def("is_available", &JanusVariable::isAvailable)
+      .def("is_missing", &JanusVariable::isMissing)
+      .def("is_mandatory", &JanusVariable::isMandatory)
+
+      .def("as_str", &JanusVariable::stringValue)
+
+      .def_property_readonly("initial_value", &JanusVariable::getInitialValue)
+      .def_property_readonly("name", &JanusVariable::getName)
+      .def_property_readonly("units", &JanusVariable::getUnits)
+      .def_property_readonly("var_id", &JanusVariable::getVarID)
+
+      .def("get_value", &JanusVariable::value)
+      .def("set_value", &JanusVariable::setValue)
+
       .def("__repr__",
            [](JanusVariable &self)
            {

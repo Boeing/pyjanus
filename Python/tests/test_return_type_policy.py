@@ -25,7 +25,7 @@
 import pyJanus
 
 
-def test_return_type_policy():
+def test_Janus_return_type_policy():
     """
     This checks any return value policies that are not on the default policy
     `return_value_policy::automatic`
@@ -41,4 +41,25 @@ def test_return_type_policy():
     assert id(janus.get_variabledef("angleOfAttack")) == id(angle_of_attack)
     assert id(angle_of_attack.janus) == id(janus)
 
+
 # Consider checking __repr__ and __str__
+
+
+def test_JanusVariableManager_return_type_policy():
+    # sourcery skip: equality-identity, use-assigned-variable
+    """
+    This checks any return value policies that are not on the default policy
+    `return_value_policy::automatic`
+
+    Reference: <https://pybind11.readthedocs.io/en/stable/advanced/functions.html#return-value-policies>
+    """
+    xml_path = "Examples/JanusVariableManagerExample.xml"
+    jvm = pyJanus.JanusVariableManager(xml_path)
+
+    input00 = pyJanus.JanusVariable(
+        "input00", pyJanus.janusInputVariable, pyJanus.janusMandatory, "m s-1", 0.0
+    )
+    jInput00 = jvm.push_back(input00)
+    jv_input00 = jvm[jInput00]
+
+    assert id(jv_input00) == id(jvm[jInput00])

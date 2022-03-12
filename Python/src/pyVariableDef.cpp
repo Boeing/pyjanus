@@ -39,10 +39,10 @@ void init_VariableDef(py::module_ &m)
            py::arg("janus"), py::arg("element_definition"))
 
       .def_property_readonly("janus", &VariableDef::getJanusInstance)
-      .def_property_readonly("name", &VariableDef::getName)
-      .def_property_readonly("var_id", &VariableDef::getName)
-      .def_property_readonly("units", &VariableDef::getUnits)
       .def_property_readonly("initial_value", &VariableDef::getInitialValue)
+      .def_property_readonly("name", &VariableDef::getName)
+      .def_property_readonly("units", &VariableDef::getUnits)
+      .def_property_readonly("var_id", &VariableDef::getVarID)
 
       .def("get_value", &VariableDef::getValue)
       .def("set_value",

@@ -43,6 +43,7 @@ import os
 import re
 import subprocess
 import sys
+from pathlib import Path
 
 from setuptools import Extension, setup
 from setuptools.command.build_ext import build_ext
@@ -87,8 +88,7 @@ class CMakeBuild(build_ext):
             f"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={extdir}",
             f"-DPYTHON_EXECUTABLE={sys.executable}",
             f"-DCMAKE_BUILD_TYPE={cfg}",  # not used on MSVC, but no harm
-            "-DBUILD_EXAMPLES=ON",
-            "-DPYBIND11_BUILD_TESTS=ON",
+            # "-DBUILD_EXAMPLES=ON",
             "-DBUILD_PYBINDINGS=ON",
         ]
         build_args = []
@@ -136,9 +136,7 @@ class CMakeBuild(build_ext):
 
         if sys.platform.startswith("darwin"):
             # Cross-compile support for macOS - respect ARCHFLAGS if set
-            if archs := re.findall(
-                r"-arch (\S+)", os.environ.get("ARCHFLAGS", "")
-            ):
+            if archs := re.findall(r"-arch (\S+)", os.environ.get("ARCHFLAGS", "")):
                 cmake_args += ["-DCMAKE_OSX_ARCHITECTURES={}".format(";".join(archs))]
 
         # Set CMAKE_BUILD_PARALLEL_LEVEL to control the parallel build level
@@ -167,15 +165,20 @@ class CMakeBuild(build_ext):
         )
 
 
+this_dir = Path(__file__).parent
+long_description = (this_dir / "README.md").read_text()
+
 # The information here can also be placed in setup.cfg - better separation of
 # logic and declaration, and simpler if you include description/version in a file.
 setup(
-    name="pyJanus",
-    version="0.1.0",
+    name="python-janus",
+    version="0.1.1",
     author="Alwin Wang",
     author_email="16846521+AlwinW@users.noreply.github.com",
+    url="https://github.com/alwinw/pyJanus",
     description="python bindings for Janus",
-    long_description="python bindings for Janus",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     ext_modules=[CMakeExtension("pyJanus")],
     cmdclass={"build_ext": CMakeBuild},
     zip_safe=False,

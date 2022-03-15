@@ -38,3 +38,14 @@ jOutput00 = jvm.push_back(output00)
 jv_input00 = jvm[jInput00]
 jv_output00 = jvm[jOutput00]
 ```
+
+```console
+rm -rf dist/
+rm -rf python_janus.egg-info
+python setup.py sdist bdist_wheel
+```
+
+```console
+python -m twine check dist/*
+python -m twine upload dist/*
+```

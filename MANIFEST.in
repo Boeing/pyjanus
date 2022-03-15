@@ -22,8 +22,10 @@
 # SOFTWARE.
 #
 
-include README.md LICENCE.md
+prune *
+# or use sdist --no-defaults
 
+include README.md LICENCE.md
 
 recursive-include Janus *.cpp *.h *.txt
 recursive-include Ute   *.cpp *.h *.hpp *.txt
@@ -31,6 +33,7 @@ recursive-include Ute   *.cpp *.h *.hpp *.txt
 include ThirdParty/dirent/dirent.h
 
 include ThirdParty/pugixml/DSTG_Readme.txt
+include ThirdParty/pugixml/pugiconfig.hpp
 include ThirdParty/pugixml/pugixml.cpp
 include ThirdParty/pugixml/pugixml.hpp
 include ThirdParty/pugixml/readme.txt
@@ -43,6 +46,7 @@ include ThirdParty/qhull/src/libqhullcpp/*.cpp
 include ThirdParty/qhull/src/libqhullcpp/*.h
 
 include Python/pybind11/LICENSE
+include Python/pybind11/CMakeLists.txt
 recursive-include Python/pybind11/include *.h
 recursive-include Python/pybind11/tools *
 

@@ -1,8 +1,8 @@
-# Janus
+# pyJanus
 
 Janus is a Dynamic Aerospace Vehicle Exchange Mark-up Language (DAVE-ML) C++ Interpreter.
 
-This repository contains the Janus library, a supporting library called Ute, and example use cases.
+This repository contains python wrappers for the Janus library, a supporting library called Ute, and example use cases.
 
 ## Resources
 

@@ -21,8 +21,8 @@ jobs:
       matrix:
         config:
           - {
-              name: "Windows Latest MSVC (C++11)",
-              os: windows-latest,
+              name: "Windows 2019 MSVC (C++11)",
+              os: windows-2019,
               artifact: "windows_msvc.7z",
               build_type: "Release",
               cc: "cl",
@@ -31,6 +31,7 @@ jobs:
               archiver: "7z a",
               generators: "Visual Studio 16 2019",
             }
+            # Reference: https://github.com/actions/virtual-environments/issues/3949
           - {
               name: "Windows Latest MinGW",
               os: windows-latest,
@@ -51,16 +52,16 @@ jobs:
               archiver: "7z a",
               generators: "Ninja",
             }
-          # - {
-          #     name: "macOS Latest Clang (C++11)",
-          #     os: macos-latest,
-          #     artifact: "macos_clang.7z",
-          #     build_type: "Release",
-          #     cc: "clang",
-          #     cxx: "clang++",
-          #     archiver: "7za a",
-          #     generators: "Ninja",
-          #   }
+          - {
+              name: "macOS Latest Clang (C++11)",
+              os: macos-latest,
+              artifact: "macos_clang.7z",
+              build_type: "Release",
+              cc: "clang",
+              cxx: "clang++",
+              archiver: "7za a",
+              generators: "Ninja",
+            }
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it

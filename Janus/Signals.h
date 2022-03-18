@@ -65,7 +65,7 @@
 
 // Local Includes
 #include "XmlElementDefinition.h"
-#include "Signal.h"
+#include "Sgnl.h"
 
 namespace janus {
 

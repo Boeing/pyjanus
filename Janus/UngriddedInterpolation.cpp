@@ -328,7 +328,7 @@ double Janus::getUngriddedInterpolation(
    */
   if ( discreteFlag) {
     weight -= 1.0;
-    weight  = abs( weight);
+    weight  = std::abs( weight);
     size_t entry = findMin( weight);
     weight = 0.0;
     weight[ entry] = 1.0;

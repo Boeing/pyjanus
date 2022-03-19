@@ -21,7 +21,7 @@ jobs:
       matrix:
         config:
           - {
-              name: "Windows 2019 MSVC (C++11)",
+              name: "Windows 2019 MSVC",
               os: windows-2019,
               artifact: "windows_msvc.7z",
               build_type: "Release",
@@ -43,7 +43,7 @@ jobs:
               generators: "Ninja",
             }
           - {
-              name: "Ubuntu Latest GCC (C++11)",
+              name: "Ubuntu Latest GCC",
               os: ubuntu-latest,
               artifact: "ubuntu.7z",
               build_type: "Release",
@@ -53,7 +53,7 @@ jobs:
               generators: "Ninja",
             }
           - {
-              name: "macOS Latest Clang (C++11)",
+              name: "macOS Latest Clang",
               os: macos-latest,
               artifact: "macos_clang.7z",
               build_type: "Release",

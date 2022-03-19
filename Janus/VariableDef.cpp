@@ -60,7 +60,7 @@
  */
 
 #include <algorithm>
-#ifdef _MSC_VER
+#if defined(_MSC_VER) || defined(__APPLE__)
 #include <functional>
 #else
 #include <tr1/functional>

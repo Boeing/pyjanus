@@ -30,6 +30,7 @@
 function(builder NAME)
   add_executable(${NAME} ${NAME}.cpp)
   target_link_libraries(${NAME} PUBLIC Janus)
+  target_compile_features(${NAME} PRIVATE cxx_std_11)
 endfunction()
 
 set(FILES 

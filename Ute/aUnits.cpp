@@ -440,15 +440,15 @@ namespace dstoute {
       // Temperature
       << UnitsMap::pair( "dgK",    u_degK)
       << UnitsMap::pair( "'K",     u_degK)
-      << UnitsMap::pair( "°K",     u_degK)
+      << UnitsMap::pair( "\260K",  u_degK)
       << UnitsMap::pair( "C",      u_degC)
       << UnitsMap::pair( "dgC",    u_degC)
       << UnitsMap::pair( "'C",     u_degC)
-      << UnitsMap::pair( "°C",     u_degC)
+      << UnitsMap::pair( "\260C",  u_degC)
       << UnitsMap::pair( "F",      u_degF)
       << UnitsMap::pair( "dgF",    u_degF)
       << UnitsMap::pair( "'F",     u_degF)
-      << UnitsMap::pair( "°F",     u_degF)
+      << UnitsMap::pair( "\260F",  u_degF)
       << UnitsMap::pair( "R",      u_degR)
       << UnitsMap::pair( "dgR",    u_degR)
 

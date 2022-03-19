@@ -72,7 +72,7 @@
 #include <Ute/aMath.h>
 
 #include "DomFunctions.h"
-#include "Signal.h"
+#include "Sgnl.h"
 
 using namespace std;
 using namespace dstoute;

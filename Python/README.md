@@ -6,6 +6,14 @@ cd Python
 pip install --verbose .[test]
 ```
 
+If you didn't use `--recursive` you will have to do the following:
+
+```console
+git submodule update --recursive
+git submodule update --recursive
+```
+
+
 From the top level (maybe change to build_pyd)
 
 ```console

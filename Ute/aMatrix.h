@@ -166,6 +166,79 @@ namespace dstomath {
     return ( b * ::sqrt( T(1) + c * c));
   }
 
+  //
+  // IO Stream functions for valarray/vector
+  //
+  template <typename T> std::ostream& operator<< ( std::ostream &os, const valarray<T> &v)
+  {
+    if ( v.size() == 0) {
+      os << "Null Vector";
+    }
+    else {
+      os.width(11);
+      if ( am_math::isZero( v[0])) {
+        os << 0;
+      }
+      else {
+        os << v[0];
+      }
+      for ( size_t i=1; i < v.size(); ++i) {
+        os << ' ';
+        os.width(11);
+        if ( am_math::isZero( v[i])) {
+          os << 0;
+        }
+        else {
+          os << v[i];
+        }
+      }
+    }
+    return os;
+  }
+
+  template <typename T> std::istream& operator>> ( std::istream &is, valarray<T> &v)
+  {
+    for ( size_t i = 0; i < v.size(); ++i) {
+      is >> v[i];
+    }
+    return is;
+  }
+
+  template <typename T> std::ostream& operator<< ( std::ostream &os, const std::vector<T> &v)
+  {
+    if ( v.size() == 0) {
+      os << "Null Vector";
+    }
+    else {
+      os.width(11);
+      if ( am_math::isZero( v[0])) {
+        os << 0;
+      }
+      else {
+        os << v[0];
+      }
+      for ( size_t i=1; i < v.size(); ++i) {
+        os << ' ';
+        os.width(11);
+        if ( am_math::isZero( v[i])) {
+          os << 0;
+        }
+        else {
+          os << v[i];
+        }
+      }
+    }
+    return os;
+  }
+
+  template <typename T> std::istream& operator>> ( std::istream &is, std::vector<T> &v)
+  {
+    for ( size_t i = 0; i < v.size(); ++i) {
+      is >> v[i];
+    }
+    return is;
+  }
+
   /** Matrix Slice
    *
    */
@@ -3745,79 +3818,6 @@ namespace dstomath {
       v[i] = am_math::min( v[i], am_math::max( vMin[i], vMax[i]));
     }
     return v;
-  }
-
-  //
-  // IO Stream functions for valarray/vector
-  //
-  template <typename T> std::ostream& operator<< ( std::ostream &os, const valarray<T> &v)
-  {
-    if ( v.size() == 0) {
-      os << "Null Vector";
-    }
-    else {
-      os.width(11);
-      if ( am_math::isZero( v[0])) {
-        os << 0;
-      }
-      else {
-        os << v[0];
-      }
-      for ( size_t i=1; i < v.size(); ++i) {
-        os << ' ';
-        os.width(11);
-        if ( am_math::isZero( v[i])) {
-          os << 0;
-        }
-        else {
-          os << v[i];
-        }
-      }
-    }
-    return os;
-  }
-
-  template <typename T> std::istream& operator>> ( std::istream &is, valarray<T> &v)
-  {
-    for ( size_t i = 0; i < v.size(); ++i) {
-      is >> v[i];
-    }
-    return is;
-  }
-
-  template <typename T> std::ostream& operator<< ( std::ostream &os, const std::vector<T> &v)
-  {
-    if ( v.size() == 0) {
-      os << "Null Vector";
-    }
-    else {
-      os.width(11);
-      if ( am_math::isZero( v[0])) {
-        os << 0;
-      }
-      else {
-        os << v[0];
-      }
-      for ( size_t i=1; i < v.size(); ++i) {
-        os << ' ';
-        os.width(11);
-        if ( am_math::isZero( v[i])) {
-          os << 0;
-        }
-        else {
-          os << v[i];
-        }
-      }
-    }
-    return os;
-  }
-
-  template <typename T> std::istream& operator>> ( std::istream &is, std::vector<T> &v)
-  {
-    for ( size_t i = 0; i < v.size(); ++i) {
-      is >> v[i];
-    }
-    return is;
   }
 
 #endif // __valarray_functions_H

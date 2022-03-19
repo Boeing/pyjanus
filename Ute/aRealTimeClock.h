@@ -44,7 +44,7 @@
 #include <ctime>
 
 // System Specific Includes
-#ifdef __unix
+#if defined(__unix) || defined(__APPLE__)
   #include <unistd.h>
 #endif
 #if defined(WIN32) || defined(_WIN32) ||defined(__WIN32__)
@@ -87,7 +87,7 @@ namespace dstoute {
     /** Sleep for a set number of milliseconds.
      * @param ms is an integer time in milliseconds.
      */
-    #ifdef __unix
+    #if defined(__unix) || defined(__APPLE__)
     void sleep( int ms) const
     {
       int sec = ms / 1000;

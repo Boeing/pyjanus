@@ -86,4 +86,6 @@ if (MSVC)
 	)	
 
 	set_target_properties(Ute PROPERTIES COMPILE_FLAGS "/bigobj")
+elseif (MINGW)
+  set_target_properties(Ute PROPERTIES COMPILE_FLAGS "-Wa,-mbig-obj")
 endif()

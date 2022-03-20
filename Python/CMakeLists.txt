@@ -38,6 +38,5 @@ pybind11_add_module(pyJanus
 target_link_libraries(pyJanus PUBLIC Janus)
 
 target_compile_definitions(
-  pyJanus
-  PRIVATE VERSION_INFO=${PY_VERSION_INFO}
+  pyJanus PRIVATE VERSION_INFO=${PY_VERSION_INFO}
 )

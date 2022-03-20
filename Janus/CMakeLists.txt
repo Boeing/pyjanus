@@ -161,6 +161,12 @@ elseif (MINGW)
     set_target_properties(Janus PROPERTIES COMPILE_FLAGS "-Wa,-mbig-obj")
 endif()
 
+if(BUILD_PYBINDINGS)
+	set_property(TARGET Janus PROPERTY POSITION_INDEPENDENT_CODE ON)
+	set_property(TARGET qhull PROPERTY POSITION_INDEPENDENT_CODE ON)
+	set_property(TARGET pugixml PROPERTY POSITION_INDEPENDENT_CODE ON)
+endif()
+
 target_link_libraries(Janus 
     PUBLIC 
         Ute

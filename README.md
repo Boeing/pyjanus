@@ -4,6 +4,14 @@ Janus is a Dynamic Aerospace Vehicle Exchange Mark-up Language (DAVE-ML) C++ Int
 
 This repository contains python wrappers for the Janus library, a supporting library called Ute, and example use cases.
 
+## Installation
+
+pyJanus can be installed directly from [PyPI](https://pypi.python.org/pypi/python-janus) pre-built wheels using:
+
+```console
+pip install python-janus
+```
+
 ## Resources
 
 - DST Group Janus website: <https://www.dst.defence.gov.au/opportunity/janus-dynamic-aerospace-vehicle-exchange-mark-language-dave-ml-c-interpreter>

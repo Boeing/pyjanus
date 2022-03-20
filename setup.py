@@ -39,6 +39,7 @@
 # derivative works thereof, in binary and source code form.
 #
 
+import contextlib
 import os
 import re
 import subprocess
@@ -67,17 +68,17 @@ class CMakeExtension(Extension):
 
 
 class CMakeBuild(build_ext):
-    def build_extension(self, ext):
+    def build_extension(self, ext):  # sourcery skip: use-named-expression
         extdir = os.path.abspath(os.path.dirname(self.get_ext_fullpath(ext.name)))
 
         # required for auto-detection & inclusion of auxiliary "native" libs
         if not extdir.endswith(os.path.sep):
             extdir += os.path.sep
-        print(f"info: building {ext.name=} to {extdir=}")
+        print(f"info: building ext.name='{ext.name}' to extdir='{extdir}'")
 
         debug = int(os.environ.get("DEBUG", 0)) if self.debug is None else self.debug
         cfg = "Debug" if debug else "Release"
-        print(f"info: building with {cfg=}")
+        print(f"info: building with cfg='{cfg}'")
 
         # CMake lets you override the generator - we need to check this.
         # Can be set with Conda-Build, for example.
@@ -127,17 +128,16 @@ class CMakeBuild(build_ext):
             # exported for Ninja to pick it up, which is a little tricky to do.
             # Users can override the generator with CMAKE_GENERATOR in CMake
             # 3.15+.
-            try:
+            with contextlib.suppress(ImportError):
                 import ninja  # noqa: F401
 
                 cmake_args += ["-GNinja"]
-            except ImportError:
-                pass
 
         if sys.platform.startswith("darwin"):
             # Cross-compile support for macOS - respect ARCHFLAGS if set
-            if archs := re.findall(r"-arch (\S+)", os.environ.get("ARCHFLAGS", "")):
-                cmake_args += ["-DCMAKE_OSX_ARCHITECTURES={}".format(";".join(archs))]
+            archs = re.findall(r"-arch (\S+)", os.environ.get("ARCHFLAGS", ""))
+            if archs:
+                cmake_args += [f'-DCMAKE_OSX_ARCHITECTURES={";".join(archs)}']
 
         # Set CMAKE_BUILD_PARALLEL_LEVEL to control the parallel build level
         # across all generators.
@@ -151,11 +151,11 @@ class CMakeBuild(build_ext):
             # CMake 3.12+ only.
             build_args += [f"-j{self.parallel}"]
 
-        print(f"info: building with {cmake_args=}")
+        print(f"info: building with cmake_args={cmake_args}")
 
         if not os.path.exists(self.build_temp):
             os.makedirs(self.build_temp)
-        print(f"info: building with {self.build_temp=}")
+        print(f"info: building with build_temp='{self.build_temp}'")
 
         subprocess.check_call(
             ["cmake", ext.sourcedir] + cmake_args, cwd=self.build_temp
@@ -172,7 +172,7 @@ long_description = (this_dir / "README.md").read_text()
 # logic and declaration, and simpler if you include description/version in a file.
 setup(
     name="python-janus",
-    version="0.2.0",
+    version="0.2.1",
     author="Alwin Wang",
     author_email="16846521+AlwinW@users.noreply.github.com",
     url="https://github.com/alwinw/pyJanus",
@@ -183,5 +183,5 @@ setup(
     cmdclass={"build_ext": CMakeBuild},
     zip_safe=False,
     extras_require={"test": ["pytest>=6.0"]},
-    python_requires=">=3.8",
+    python_requires=">=3.7",
 )

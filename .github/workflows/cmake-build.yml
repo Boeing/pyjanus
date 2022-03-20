@@ -4,11 +4,11 @@ name: CMake Build Matrix
 # Controls when the action will run. Triggers the workflow on push
 on:
   push:
-    branches:
-      - master
+    # branches:
+    #   - master
   pull_request:
-    branches:
-      - master
+    # branches:
+    #   - master
   release:
     tags:
     - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
@@ -70,6 +70,8 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+        with:
+          submodules: true
 
       - name: Print env
         run: |
@@ -113,7 +115,7 @@ jobs:
 
       - name: Build
         shell: bash
-        run: cmake --build . --config ${{ matrix.config.build_type }}
+        run: cmake --build . --config ${{ matrix.config.build_type }} -j8
 
       # - name: Run tests on Windows
       #   if: startsWith(matrix.config.os, 'windows')

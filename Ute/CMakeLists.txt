@@ -89,3 +89,7 @@ if (MSVC)
 elseif (MINGW)
   set_target_properties(Ute PROPERTIES COMPILE_FLAGS "-Wa,-mbig-obj")
 endif()
+
+if(BUILD_PYBINDINGS)
+	set_property(TARGET Ute PROPERTY POSITION_INDEPENDENT_CODE ON)
+endif()

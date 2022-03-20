@@ -33,7 +33,7 @@ jobs:
               cxx: "clang++",
             }
 
-    name: ${{ matrix.config.name }} - ${{ matrix.python-version }}
+    name: ${{ matrix.config.name }} - py${{ matrix.python-version }}
     runs-on: ${{ matrix.config.os }}
 
     steps:
@@ -47,6 +47,14 @@ jobs:
 
       - name: Add requirements
         run: python -m pip install --upgrade wheel setuptools
+
+      - name: Echo env details
+        env:
+          CC: ${{ matrix.config.cc }}
+          CXX: ${{ matrix.config.cxx }}
+        run: |
+          echo $CC
+          echo $CXX
 
       - name: Build and install
         run: pip install --verbose .[test]

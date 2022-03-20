@@ -53,7 +53,7 @@ profile = "black"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = ["-ra", "--showlocals", "--strict-markers", "--strict-config"]
+addopts = ["-ra", "--showlocals", "--strict-markers", "--strict-config", "-v"]
 xfail_strict = true
 filterwarnings = ["error"]
 testpaths = ["Python/tests"]

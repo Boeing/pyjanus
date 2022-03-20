@@ -22,6 +22,7 @@
 # SOFTWARE.
 #
 
+import os
 import pyJanus
 
 
@@ -29,7 +30,9 @@ def test_janus_variable_manager_example_00():
     """
     This checks pyJanus against the Examples/SetVarDefExample.cpp program 00
     """
-    xml_path = "Examples/JanusVariableManagerExample.xml"
+    xml_path = (
+        f"{os.path.dirname(__file__)}/../../Examples/JanusVariableManagerExample.xml"
+    )
     jvm = pyJanus.JanusVariableManager(xml_path)
 
     input00 = pyJanus.JanusVariable(
@@ -60,7 +63,9 @@ def test_janus_variable_manager_example_01():
     """
     This checks pyJanus against the Examples/SetVarDefExample.cpp program 01
     """
-    xml_path = "Examples/JanusVariableManagerExample.xml"
+    xml_path = (
+        f"{os.path.dirname(__file__)}/../../Examples/JanusVariableManagerExample.xml"
+    )
     jvm = pyJanus.JanusVariableManager(xml_path)
 
     input00 = pyJanus.JanusVariable(

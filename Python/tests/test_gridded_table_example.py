@@ -22,6 +22,7 @@
 # SOFTWARE.
 #
 
+import os
 import pyJanus
 
 
@@ -29,7 +30,7 @@ def test_gridded_table_example():
     """
     This checks pyJanus against the Examples/GriddedTableExample.cpp program
     """
-    xml_path = "Examples/GriddedTableExample.xml"
+    xml_path = f"{os.path.dirname(__file__)}/../../Examples/GriddedTableExample.xml"
     janus = pyJanus.Janus(xml_path)
 
     angle_of_attack = janus.get_variabledef("angleOfAttack")
@@ -38,7 +39,7 @@ def test_gridded_table_example():
 
     angle_of_attack.set_value(10)
     reynolds_number.set_value(0.36e6)
-    assert round(drag_coefficient.get_value(), 2) ==  0.01
+    assert round(drag_coefficient.get_value(), 2) == 0.01
 
     angle_of_attack.set_value(30)
     assert round(drag_coefficient.get_value(), 2) == 0.58

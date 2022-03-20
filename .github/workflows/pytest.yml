@@ -14,10 +14,26 @@ jobs:
       matrix:
         python-version: ["3.7", "3.8"]
         config:
-          - { name: "Windows Latest", os: windows-latest }
-          - { name: "Ubuntu Latest", os: ubuntu-latest }
-          - { name: "macOS Latest", os: macos-latest }
+          - {
+              name: "Windows Latest MSVC",
+              os: windows-latest,
+              cc: "cl",
+              cxx: "cl",
+            }
+          - {
+              name: "Ubuntu Latest GCC",
+              os: ubuntu-latest,
+              cc: "gcc",
+              cxx: "g++",
+            }
+          - {
+              name: "macOS Latest Clang",
+              os: macos-latest,
+              cc: "clang",
+              cxx: "clang++",
+            }
 
+    name: ${{ matrix.config.name }} - ${{ matrix.python-version }}
     runs-on: ${{ matrix.config.os }}
 
     steps:

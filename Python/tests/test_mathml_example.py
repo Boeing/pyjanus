@@ -22,6 +22,7 @@
 # SOFTWARE.
 #
 
+import os
 import pyJanus
 
 
@@ -29,7 +30,7 @@ def test_mathml_example():
     """
     This checks pyJanus against the Examples/MathMLExample.cpp program
     """
-    xml_path = "Examples/MathMLExample.xml"
+    xml_path = f"{os.path.dirname(__file__)}/../../Examples/MathMLExample.xml"
     janus = pyJanus.Janus(xml_path)
 
     x = janus.get_variabledef("x")

@@ -22,6 +22,7 @@
 # SOFTWARE.
 #
 
+import os
 import pyJanus
 
 
@@ -32,7 +33,7 @@ def test_Janus_return_type_policy():
 
     Reference: <https://pybind11.readthedocs.io/en/stable/advanced/functions.html#return-value-policies>
     """
-    xml_path = "Examples/CombinedExample.xml"
+    xml_path = f"{os.path.dirname(__file__)}/../../Examples/CombinedExample.xml"
     janus = pyJanus.Janus(xml_path)
 
     angle_of_attack = janus.get_variabledef("angleOfAttack")
@@ -53,7 +54,9 @@ def test_JanusVariableManager_return_type_policy():
 
     Reference: <https://pybind11.readthedocs.io/en/stable/advanced/functions.html#return-value-policies>
     """
-    xml_path = "Examples/JanusVariableManagerExample.xml"
+    xml_path = (
+        f"{os.path.dirname(__file__)}/../../Examples/JanusVariableManagerExample.xml"
+    )
     jvm = pyJanus.JanusVariableManager(xml_path)
 
     input00 = pyJanus.JanusVariable(

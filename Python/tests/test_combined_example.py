@@ -22,6 +22,7 @@
 # SOFTWARE.
 #
 
+import os
 import pyJanus
 
 
@@ -29,7 +30,7 @@ def test_combined_example():
     """
     This checks pyJanus against the Examples/CombinedExample.cpp program
     """
-    xml_path = "Examples/CombinedExample.xml"
+    xml_path = f"{os.path.dirname(__file__)}/../../Examples/CombinedExample.xml"
     janus = pyJanus.Janus(xml_path)
 
     angle_of_attack = janus.get_variabledef("angleOfAttack")

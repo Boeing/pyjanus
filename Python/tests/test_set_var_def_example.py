@@ -22,6 +22,7 @@
 # SOFTWARE.
 #
 
+import os
 import pyJanus
 
 
@@ -29,7 +30,7 @@ def test_set_var_def_example_00():
     """
     This checks pyJanus against the Examples/SetVarDefExample.cpp program 00
     """
-    xml_path = "Examples/SetVarDefExample.xml"
+    xml_path = f"{os.path.dirname(__file__)}/../../Examples/SetVarDefExample.xml"
     janus = pyJanus.Janus(xml_path)
 
     input00 = janus.get_variabledef("input00")
@@ -43,7 +44,7 @@ def test_set_var_def_example_01():
     """
     This checks pyJanus against the Examples/SetVarDefExample.cpp program 01
     """
-    xml_path = "Examples/SetVarDefExample.xml"
+    xml_path = f"{os.path.dirname(__file__)}/../../Examples/SetVarDefExample.xml"
     janus = pyJanus.Janus(xml_path)
 
     incrementer = janus.get_variabledef("incrementer")
@@ -63,7 +64,7 @@ def test_set_var_def_example_02():
     """
     This checks pyJanus against the Examples/SetVarDefExample.cpp program 02
     """
-    xml_path = "Examples/SetVarDefExample.xml"
+    xml_path = f"{os.path.dirname(__file__)}/../../Examples/SetVarDefExample.xml"
     janus = pyJanus.Janus(xml_path)
 
     input02 = janus.get_variabledef("input02")
@@ -79,7 +80,7 @@ def test_set_var_def_example_03():
     """
     This checks pyJanus against the Examples/SetVarDefExample.cpp program 03
     """
-    xml_path = "Examples/SetVarDefExample.xml"
+    xml_path = f"{os.path.dirname(__file__)}/../../Examples/SetVarDefExample.xml"
     janus = pyJanus.Janus(xml_path)
 
     input03 = janus.get_variabledef("input03")
@@ -95,7 +96,7 @@ def test_set_var_def_example_04():
     """
     This checks pyJanus against the Examples/SetVarDefExample.cpp program 04
     """
-    xml_path = "Examples/SetVarDefExample.xml"
+    xml_path = f"{os.path.dirname(__file__)}/../../Examples/SetVarDefExample.xml"
     janus = pyJanus.Janus(xml_path)
 
     function04_00 = janus.get_variabledef("function04_00")
@@ -109,7 +110,7 @@ def test_set_var_def_example_05():
     """
     This checks pyJanus against the Examples/SetVarDefExample.cpp program 05
     """
-    xml_path = "Examples/SetVarDefExample.xml"
+    xml_path = f"{os.path.dirname(__file__)}/../../Examples/SetVarDefExample.xml"
     janus = pyJanus.Janus(xml_path)
 
     output05_00 = janus.get_variabledef("output05_00")
@@ -123,7 +124,7 @@ def test_set_var_def_example_06():
     """
     This checks pyJanus against the Examples/SetVarDefExample.cpp program 06
     """
-    xml_path = "Examples/SetVarDefExample.xml"
+    xml_path = f"{os.path.dirname(__file__)}/../../Examples/SetVarDefExample.xml"
     janus = pyJanus.Janus(xml_path)
 
     output06_00 = janus.get_variabledef("output06_00")

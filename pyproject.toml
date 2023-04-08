@@ -60,3 +60,9 @@ test-command = "pytest {project}/Python/tests"
 test-extras = ["test"]
 # Setuptools bug causes collision between pypy and cpython artifacts
 before-build = "rm -rf {project}/build"
+
+[tool.commitizen]
+version = "0.2.2"
+tag_format = "v$version"
+version_files = ["pyproject.toml:version", "setup.py"]
+update_changelog_on_bump = true

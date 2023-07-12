@@ -27,7 +27,7 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #
 
-add_library(qhull STATIC 
+add_library(qhull STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/../ThirdParty/qhull/src/libqhullcpp/Coordinates.cpp
  	${CMAKE_CURRENT_SOURCE_DIR}/../ThirdParty/qhull/src/libqhullcpp/PointCoordinates.cpp
  	${CMAKE_CURRENT_SOURCE_DIR}/../ThirdParty/qhull/src/libqhullcpp/Qhull.cpp
@@ -63,24 +63,24 @@ add_library(qhull STATIC
 )
 
 target_include_directories(qhull SYSTEM # suppress warnings
-    PUBLIC 
+    PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../ThirdParty/qhull/src>
 )
 
 target_compile_features(qhull PRIVATE cxx_std_11)
 
-add_library(pugixml STATIC 
+add_library(pugixml STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/../ThirdParty/pugixml/pugixml.cpp
 )
 
 target_include_directories(pugixml SYSTEM # suppress warnings
-    PUBLIC 
+    PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../ThirdParty/pugixml>
 )
 
 target_compile_features(pugixml PRIVATE cxx_std_11)
 
-add_library(Janus STATIC 
+add_library(Janus STATIC
  	${CMAKE_CURRENT_SOURCE_DIR}/Array.cpp
  	${CMAKE_CURRENT_SOURCE_DIR}/Author.cpp
  	${CMAKE_CURRENT_SOURCE_DIR}/Bounds.cpp
@@ -108,10 +108,10 @@ add_library(Janus STATIC
  	${CMAKE_CURRENT_SOURCE_DIR}/PropertyDef.cpp
  	${CMAKE_CURRENT_SOURCE_DIR}/Provenance.cpp
  	${CMAKE_CURRENT_SOURCE_DIR}/Reference.cpp
- 	${CMAKE_CURRENT_SOURCE_DIR}/Signal.cpp
- 	${CMAKE_CURRENT_SOURCE_DIR}/SignalDef.cpp	
- 	${CMAKE_CURRENT_SOURCE_DIR}/Signals.cpp
- 	${CMAKE_CURRENT_SOURCE_DIR}/SignalList.cpp
+ 	${CMAKE_CURRENT_SOURCE_DIR}/Sgnl.cpp
+ 	${CMAKE_CURRENT_SOURCE_DIR}/SgnlDef.cpp
+ 	${CMAKE_CURRENT_SOURCE_DIR}/Sgnls.cpp
+ 	${CMAKE_CURRENT_SOURCE_DIR}/SgnlList.cpp
  	${CMAKE_CURRENT_SOURCE_DIR}/SolveMathML.cpp
  	${CMAKE_CURRENT_SOURCE_DIR}/StatespaceFn.cpp
  	${CMAKE_CURRENT_SOURCE_DIR}/StaticShot.cpp
@@ -125,24 +125,24 @@ add_library(Janus STATIC
  	${CMAKE_CURRENT_SOURCE_DIR}/VariableDefLuaScript.cpp
 )
 
-target_include_directories(Janus 
-    PUBLIC 
+target_include_directories(Janus
+    PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/..>
-    PRIVATE 
+    PRIVATE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 )
 
 target_compile_features(Janus PRIVATE cxx_std_11)
-   
 
-if (UNIX) 
+
+if (UNIX)
 	target_compile_options(Janus
-		PRIVATE 
+		PRIVATE
 			$<$<CONFIG:RELEASE>:-O3>
 	)
 elseif (MSVC)
 	target_compile_options(Janus
-		PRIVATE 
+		PRIVATE
 			$<$<CONFIG:RELEASE>:-O2>
 			-D_CRT_SECURE_NO_WARNINGS
 			-DNOMINMAX
@@ -157,7 +157,7 @@ endif()
 
 if (MSVC)
     set_target_properties(Janus PROPERTIES COMPILE_FLAGS "/bigobj")
-elseif (MINGW)
+elseif (WIN32)
     set_target_properties(Janus PROPERTIES COMPILE_FLAGS "-Wa,-mbig-obj")
 endif()
 
@@ -167,9 +167,9 @@ if(BUILD_PYBINDINGS)
 	set_property(TARGET pugixml PROPERTY POSITION_INDEPENDENT_CODE ON)
 endif()
 
-target_link_libraries(Janus 
-    PUBLIC 
+target_link_libraries(Janus
+    PUBLIC
         Ute
         qhull
-        pugixml 
+        pugixml
 )

@@ -27,7 +27,7 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #
 
-add_library(Ute STATIC 
+add_library(Ute STATIC
 	aBiMap.h
 	aCrypt.cpp
 	aCrypt.h
@@ -54,14 +54,14 @@ add_library(Ute STATIC
 
 target_compile_features(Ute PRIVATE cxx_std_11)
 
-if (UNIX) 
+if (UNIX)
 	target_compile_options(Ute
-		PRIVATE 
+		PRIVATE
 			$<$<CONFIG:RELEASE>:-O3>
 	)
 elseif (MSVC)
 	target_compile_options(Ute
-		PRIVATE 
+		PRIVATE
 			$<$<CONFIG:RELEASE>:-O2>
 			-D_CRT_SECURE_NO_WARNINGS
 			-DNOMINMAX
@@ -75,18 +75,18 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 endif()
 
 target_include_directories(Ute
-	PUBLIC 
-		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}> 
+	PUBLIC
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 )
 
 if (MSVC)
 	target_include_directories(Ute
 		PUBLIC
 			$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../ThirdParty/dirent>
-	)	
+	)
 
 	set_target_properties(Ute PROPERTIES COMPILE_FLAGS "/bigobj")
-elseif (MINGW)
+elseif (WIN32)
   set_target_properties(Ute PROPERTIES COMPILE_FLAGS "-Wa,-mbig-obj")
 endif()
 

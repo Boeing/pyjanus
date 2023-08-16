@@ -6,10 +6,18 @@ This repository contains python wrappers for the Janus library, a supporting lib
 
 ## Installation
 
-pyJanus can be installed directly from [PyPI](https://pypi.python.org/pypi/python-janus) pre-built wheels using:
+If using pip install, ensure that you have first set up pip to use the internal proxy through SRES. Instructions here: <https://playbooks.web.boeing.com/wiki/Python#Installing_Packages>. This can also be configured with the devops setup: <https://git.web.boeing.com/DevHub/devops-setup>
+
+Once pip is configured, you can install pyJanus directly from SRES using:
 
 ```console
 pip install python-janus
+```
+
+Alternatively, you can directly install the development version from GitLab:
+
+```console
+pip install git+ssh://git@git.web.boeing.com/flight-sciences/aero-database/pyjanus.git
 ```
 
 ## Resources
@@ -20,7 +28,7 @@ pip install python-janus
 
 ## Build
 
-From within the top-level directory you can instal pyJanus with pip:
+From within the top-level directory you can install pyJanus with pip:
 
 ```console
 export MAKEFLAGS=-j8

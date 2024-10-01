@@ -2,9 +2,9 @@
 
 ## Git Submodules
 
-From within the top-level directory:
+If cloning this project, specify the submodules using `git clone --recursive`
 
-<!-- FIXME -->
+For already cloned repositories, use `git submodule update --init --recursive`
 
 A patch has been created for the modifications for pugixml:
 
@@ -13,6 +13,14 @@ A patch has been created for the modifications for pugixml:
 cd ThirdParty/pugixml
 git diff --cached > pugixml_dstg.patch
 cp ./pugixml_dstg.patch ../pugixml_dstg.patch
+```
+
+To apply this patch:
+
+```console
+cd ThirdParty/pugixml
+cp ../pugixml_dstg.patch ./pugixml_dstg.patch
+git apply ./pugixml_dstg.patch
 ```
 
 ## Janus Library Only

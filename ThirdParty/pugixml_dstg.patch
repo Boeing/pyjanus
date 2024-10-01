@@ -21,18 +21,18 @@ index 652d1e2..a4cbe20 100644
 @@ -14,6 +14,10 @@
  #ifndef SOURCE_PUGIXML_CPP
  #define SOURCE_PUGIXML_CPP
-
+ 
 +// ####################################### DST Mod #######################################
 +#define enable_dst_modifications
 +// ##################################### End DST Mod #####################################
 +
  #include "pugixml.hpp"
-
+ 
  #include <stdlib.h>
 @@ -2689,11 +2693,28 @@ PUGI_IMPL_NS_BEGIN
  		}
  	}
-
+ 
 -	typedef char_t* (*strconv_pcdata_t)(char_t*);
 +  // ####################################### DST Mod #######################################
 +  #ifdef enable_dst_modifications
@@ -46,7 +46,7 @@ index 652d1e2..a4cbe20 100644
 +  #endif
 +  // ##################################### End DST Mod #####################################
 +
-
+ 
  	template <typename opt_trim, typename opt_eol, typename opt_escape> struct strconv_pcdata_impl
  	{
 -		static char_t* parse(char_t* s)
@@ -59,11 +59,11 @@ index 652d1e2..a4cbe20 100644
 +    // ##################################### End DST Mod #####################################
  		{
  			gap g;
-
+ 
 @@ -2703,6 +2724,17 @@ PUGI_IMPL_NS_BEGIN
  			{
  				PUGI_IMPL_SCANWHILE_UNROLL(!PUGI_IMPL_IS_CHARTYPE(ss, ct_parse_pcdata));
-
+ 
 +        // ####################################### DST Mod #######################################
 +        #ifdef enable_dst_modifications
 +        if (*s == '<' && s[1] == '!') // Embedded comment. Blank if not required.
@@ -81,7 +81,7 @@ index 652d1e2..a4cbe20 100644
 @@ -3481,7 +3513,13 @@ PUGI_IMPL_NS_BEGIN
  					{
  						char_t* parsed_pcdata = s;
-
+ 
 -						s = strconv_pcdata(s);
 +            // ####################################### DST Mod #######################################
 +            #ifdef enable_dst_modifications
@@ -90,13 +90,13 @@ index 652d1e2..a4cbe20 100644
 +            s = strconv_pcdata(s);
 +            #endif
 +            // ##################################### End DST Mod #####################################
-
+ 
  						if (PUGI_IMPL_OPTSET(parse_embed_pcdata) && cursor->parent && !cursor->first_child && !cursor->value)
  						{
 @@ -3511,6 +3549,14 @@ PUGI_IMPL_NS_BEGIN
  							cursor = prev_cursor; // Pop since this is a standalone.
  						}
-
+ 
 +            // ####################################### DST Mod #######################################
 +            #ifdef enable_dst_modifications
 +            s = strconv_pcdata(s, optmsk);

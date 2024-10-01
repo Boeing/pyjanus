@@ -1,5 +1,20 @@
 # Build
 
+## Git Submodules
+
+From within the top-level directory:
+
+<!-- FIXME -->
+
+A patch has been created for the modifications for pugixml:
+
+```console
+# Make changes and then create the patch
+cd ThirdParty/pugixml
+git diff --cached > pugixml_dstg.patch
+cp ./pugixml_dstg.patch ../pugixml_dstg.patch
+```
+
 ## Janus Library Only
 
 From within the top-level directory:

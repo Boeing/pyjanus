@@ -42,6 +42,7 @@ add_library(qhull STATIC
  	${CMAKE_CURRENT_SOURCE_DIR}/../ThirdParty/qhull/src/libqhullcpp/QhullRidge.cpp
  	${CMAKE_CURRENT_SOURCE_DIR}/../ThirdParty/qhull/src/libqhullcpp/QhullSet.cpp
  	${CMAKE_CURRENT_SOURCE_DIR}/../ThirdParty/qhull/src/libqhullcpp/QhullStat.cpp
+ 	${CMAKE_CURRENT_SOURCE_DIR}/../ThirdParty/qhull/src/libqhullcpp/QhullUser.cpp
  	${CMAKE_CURRENT_SOURCE_DIR}/../ThirdParty/qhull/src/libqhullcpp/QhullVertex.cpp
  	${CMAKE_CURRENT_SOURCE_DIR}/../ThirdParty/qhull/src/libqhullcpp/QhullVertexSet.cpp
  	${CMAKE_CURRENT_SOURCE_DIR}/../ThirdParty/qhull/src/libqhullcpp/RoadError.cpp

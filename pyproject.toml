@@ -54,15 +54,15 @@ filterwarnings = ["error"]
 testpaths = ["Python/tests"]
 
 [tool.cibuildwheel]
-test-skip = ["*universal2:arm64"]
 build-verbosity = 1
 test-command = "pytest {project}/Python/tests"
 test-extras = ["test"]
+test-skip = ["*universal2:arm64"]
 # Setuptools bug causes collision between pypy and cpython artifacts
 before-build = "rm -rf {project}/build"
 
 [tool.commitizen]
-version = "0.3.0"
+version = "0.3.1"
 tag_format = "v$version"
 version_files = ["pyproject.toml:version", "setup.py"]
 update_changelog_on_bump = true

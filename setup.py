@@ -102,7 +102,6 @@ class CMakeBuild(build_ext):
         cmake_args += [f"-DPY_VERSION_INFO={self.distribution.get_version()}"]
 
         if self.compiler.compiler_type == "msvc":
-
             # Single config generators are handled "normally"
             single_config = any(x in cmake_generator for x in {"NMake", "Ninja"})
 
@@ -172,7 +171,7 @@ long_description = (this_dir / "README.md").read_text()
 # logic and declaration, and simpler if you include description/version in a file.
 setup(
     name="python-janus",
-    version="0.3.0",
+    version="0.3.1",
     author="Alwin Wang",
     author_email="16846521+AlwinW@users.noreply.github.com",
     url="https://github.com/alwinw/pyJanus",

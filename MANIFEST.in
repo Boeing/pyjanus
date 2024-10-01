@@ -32,10 +32,10 @@ recursive-include Ute   *.cpp *.h *.hpp *.txt
 
 include ThirdParty/dirent/include/dirent.h
 
-include ThirdParty/pugixml/DSTG_Readme.txt
-include ThirdParty/pugixml/pugiconfig.hpp
-include ThirdParty/pugixml/pugixml.cpp
-include ThirdParty/pugixml/pugixml.hpp
+# include ThirdParty/pugixml/DSTG_Readme.txt
+include ThirdParty/pugixml/src/pugiconfig.hpp
+include ThirdParty/pugixml/src/pugixml.cpp
+include ThirdParty/pugixml/src/pugixml.hpp
 include ThirdParty/pugixml/readme.txt
 
 include ThirdParty/qhull/CMakeLists.txt

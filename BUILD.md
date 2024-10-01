@@ -22,6 +22,7 @@ To apply this patch:
 cd ThirdParty/pugixml
 cp ../pugixml_dstg.patch ./pugixml_dstg.patch
 git apply ./pugixml_dstg.patch
+rm ./pugixml_dstg.patch
 cd ../..
 ```
 

@@ -1,9 +1,28 @@
 diff --git a/DSTG_Readme.txt b/DSTG_Readme.txt
 new file mode 100644
-index 0000000..b6e742c
+index 0000000..88d5783
 --- /dev/null
 +++ b/DSTG_Readme.txt
-@@ -0,0 +1,10 @@
+@@ -0,0 +1,29 @@
++pyJanus Modifications
++
++pugixml does not handle the following xml 'correctly' due to the comments for row labels breaking up the string.
++
++```xml
++<dataTable>
++  <!--          8   9  10  11  12 -->
++  <!-- -2 --> -16 -18 -20 -22 -24
++  <!-- -1 -->  -8  -9 -10 -11 -12
++  <!--  0 -->   0   0   0   0   0
++  <!--  1 -->   8   9  10  11  12
++  <!--  2 -->  16  18  20  22  24
++</dataTable>
++```
++
++1.14: pugixml.cpp: Modified to remove/ignore comments within pcdata when comment parsing is turned off (default).
++                  Search for "DST Mod" or "enable_dst_modifications" within code.
++                  Updated mods to match pugixml updates and `PUGI_IMPL_` instead of `PUGI__` prefix for consistency.
++
 +DSTG Modifications:
 +
 +1.8.1: pugixml.cpp: Modified to remove/ignore comments within pcdata when comment parsing is turned off (default).
@@ -15,7 +34,7 @@ index 0000000..b6e742c
 +1.5: pugixml.cpp: Modified to remove/ignore comments within pcdata when comment parsing is turned off (default).
 +                  From line 2051. Also see line 2850. Search for "DSTO Mod" within code.
 diff --git a/src/pugixml.cpp b/src/pugixml.cpp
-index 652d1e2..a4cbe20 100644
+index 652d1e2..13ccab5 100644
 --- a/src/pugixml.cpp
 +++ b/src/pugixml.cpp
 @@ -14,6 +14,10 @@
@@ -29,7 +48,7 @@ index 652d1e2..a4cbe20 100644
  #include "pugixml.hpp"
  
  #include <stdlib.h>
-@@ -2689,11 +2693,28 @@ PUGI_IMPL_NS_BEGIN
+@@ -2689,11 +2693,27 @@ PUGI_IMPL_NS_BEGIN
  		}
  	}
  
@@ -38,14 +57,13 @@ index 652d1e2..a4cbe20 100644
 +  #ifdef enable_dst_modifications
 +  typedef char_t* (*strconv_pcdata_t)(char_t*, unsigned int);
 +
-+  #define PUGI__IGNOREUNTIL(X,Y) { while (*s != 0 && !(X))           { if (!(Y)) *s = ' '; ++s;}}
-+  #define PUGI__IGNORENEXT(X,Y)  { for ( size_t i = 0; i < (X); ++i) { if (!(Y)) *s = ' '; ++s;}}
++  #define PUGI_IMPL_IGNOREUNTIL(X,Y) { while (*s != 0 && !(X))           { if (!(Y)) *s = ' '; ++s;}}
++  #define PUGI_IMPL_IGNORENEXT(X,Y)  { for ( size_t i = 0; i < (X); ++i) { if (!(Y)) *s = ' '; ++s;}}
 +
 +  #else
 +  typedef char_t* (*strconv_pcdata_t)(char_t*);
 +  #endif
 +  // ##################################### End DST Mod #####################################
-+
  
  	template <typename opt_trim, typename opt_eol, typename opt_escape> struct strconv_pcdata_impl
  	{
@@ -60,7 +78,7 @@ index 652d1e2..a4cbe20 100644
  		{
  			gap g;
  
-@@ -2703,6 +2724,17 @@ PUGI_IMPL_NS_BEGIN
+@@ -2703,6 +2723,17 @@ PUGI_IMPL_NS_BEGIN
  			{
  				PUGI_IMPL_SCANWHILE_UNROLL(!PUGI_IMPL_IS_CHARTYPE(ss, ct_parse_pcdata));
  
@@ -68,8 +86,8 @@ index 652d1e2..a4cbe20 100644
 +        #ifdef enable_dst_modifications
 +        if (*s == '<' && s[1] == '!') // Embedded comment. Blank if not required.
 +        {
-+          PUGI__IGNOREUNTIL( s[0] == '-' && s[1] == '-' && s[2] == '>', (optmsk & parse_comments));
-+          PUGI__IGNORENEXT( 3, (optmsk & parse_comments));  // "-->"
++          PUGI_IMPL_IGNOREUNTIL( s[0] == '-' && s[1] == '-' && s[2] == '>', (optmsk & parse_comments));
++          PUGI_IMPL_IGNORENEXT( 3, (optmsk & parse_comments));  // "-->"
 +        }
 +        else
 +        #endif
@@ -78,7 +96,7 @@ index 652d1e2..a4cbe20 100644
  				if (*s == '<') // PCDATA ends here
  				{
  					char_t* end = g.flush(s);
-@@ -3481,7 +3513,13 @@ PUGI_IMPL_NS_BEGIN
+@@ -3481,7 +3512,13 @@ PUGI_IMPL_NS_BEGIN
  					{
  						char_t* parsed_pcdata = s;
  
@@ -93,18 +111,3 @@ index 652d1e2..a4cbe20 100644
  
  						if (PUGI_IMPL_OPTSET(parse_embed_pcdata) && cursor->parent && !cursor->first_child && !cursor->value)
  						{
-@@ -3511,6 +3549,14 @@ PUGI_IMPL_NS_BEGIN
- 							cursor = prev_cursor; // Pop since this is a standalone.
- 						}
- 
-+            // ####################################### DST Mod #######################################
-+            #ifdef enable_dst_modifications
-+            s = strconv_pcdata(s, optmsk);
-+            #else
-+            s = strconv_pcdata(s);
-+            #endif
-+            // ##################################### End DST Mod #####################################
-+
- 						if (!*s) break;
- 					}
- 					else

@@ -33,3 +33,6 @@ url = https://github.com/tronkko/dirent
 [submodule "ThirdParty/pugixml"]
 path = ThirdParty/pugixml
 url = https://github.com/zeux/pugixml
+[submodule "ThirdParty/qhull"]
+	path = ThirdParty/qhull
+	url = https://github.com/qhull/qhull

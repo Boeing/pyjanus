@@ -23,5 +23,16 @@
 #
 
 [submodule "Python/pybind11"]
-	path = Python/pybind11
-	url = git@github.com:pybind/pybind11.git
+path = Python/pybind11
+url = git@github.com:pybind/pybind11.git
+
+[submodule "ThirdParty/dirent"]
+path = ThirdParty/dirent
+url = https://github.com/tronkko/dirent
+
+[submodule "ThirdParty/pugixml"]
+path = ThirdParty/pugixml
+url = https://github.com/zeux/pugixml
+[submodule "ThirdParty/qhull"]
+	path = ThirdParty/qhull
+	url = https://github.com/qhull/qhull

@@ -30,7 +30,7 @@ include README.md LICENCE.md
 recursive-include Janus *.cpp *.h *.txt
 recursive-include Ute   *.cpp *.h *.hpp *.txt
 
-include ThirdParty/dirent/dirent.h
+include ThirdParty/dirent/include/dirent.h
 
 include ThirdParty/pugixml/DSTG_Readme.txt
 include ThirdParty/pugixml/pugiconfig.hpp

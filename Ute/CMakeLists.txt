@@ -82,7 +82,7 @@ target_include_directories(Ute
 if (MSVC)
 	target_include_directories(Ute
 		PUBLIC
-			$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../ThirdParty/dirent>
+			$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../ThirdParty/dirent/include>
 	)
 
 	set_target_properties(Ute PROPERTIES COMPILE_FLAGS "/bigobj")

@@ -70,12 +70,12 @@ target_include_directories(qhull SYSTEM # suppress warnings
 target_compile_features(qhull PRIVATE cxx_std_11)
 
 add_library(pugixml STATIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/../ThirdParty/pugixml/pugixml.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../ThirdParty/pugixml/src/pugixml.cpp
 )
 
 target_include_directories(pugixml SYSTEM # suppress warnings
     PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../ThirdParty/pugixml>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../ThirdParty/pugixml/src>
 )
 
 target_compile_features(pugixml PRIVATE cxx_std_11)

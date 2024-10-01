@@ -1,0 +1,110 @@
+diff --git a/DSTG_Readme.txt b/DSTG_Readme.txt
+new file mode 100644
+index 0000000..b6e742c
+--- /dev/null
++++ b/DSTG_Readme.txt
+@@ -0,0 +1,10 @@
++DSTG Modifications:
++
++1.8.1: pugixml.cpp: Modified to remove/ignore comments within pcdata when comment parsing is turned off (default).
++                  Search for "DST Mod" or "enable_dst_modifications" within code.
++
++1.7: pugixml.cpp: Modified to remove/ignore comments within pcdata when comment parsing is turned off (default).
++                  From line 2563. Also see line 3376. Search for "DSTG Mod" within code.
++
++1.5: pugixml.cpp: Modified to remove/ignore comments within pcdata when comment parsing is turned off (default).
++                  From line 2051. Also see line 2850. Search for "DSTO Mod" within code.
+diff --git a/src/pugixml.cpp b/src/pugixml.cpp
+index 652d1e2..a4cbe20 100644
+--- a/src/pugixml.cpp
++++ b/src/pugixml.cpp
+@@ -14,6 +14,10 @@
+ #ifndef SOURCE_PUGIXML_CPP
+ #define SOURCE_PUGIXML_CPP
+
++// ####################################### DST Mod #######################################
++#define enable_dst_modifications
++// ##################################### End DST Mod #####################################
++
+ #include "pugixml.hpp"
+
+ #include <stdlib.h>
+@@ -2689,11 +2693,28 @@ PUGI_IMPL_NS_BEGIN
+ 		}
+ 	}
+
+-	typedef char_t* (*strconv_pcdata_t)(char_t*);
++  // ####################################### DST Mod #######################################
++  #ifdef enable_dst_modifications
++  typedef char_t* (*strconv_pcdata_t)(char_t*, unsigned int);
++
++  #define PUGI__IGNOREUNTIL(X,Y) { while (*s != 0 && !(X))           { if (!(Y)) *s = ' '; ++s;}}
++  #define PUGI__IGNORENEXT(X,Y)  { for ( size_t i = 0; i < (X); ++i) { if (!(Y)) *s = ' '; ++s;}}
++
++  #else
++  typedef char_t* (*strconv_pcdata_t)(char_t*);
++  #endif
++  // ##################################### End DST Mod #####################################
++
+
+ 	template <typename opt_trim, typename opt_eol, typename opt_escape> struct strconv_pcdata_impl
+ 	{
+-		static char_t* parse(char_t* s)
++    // ####################################### DST Mod #######################################
++    #ifdef enable_dst_modifications
++    static char_t* parse(char_t* s, unsigned int optmsk)
++    #else
++    static char_t* parse(char_t* s)
++    #endif
++    // ##################################### End DST Mod #####################################
+ 		{
+ 			gap g;
+
+@@ -2703,6 +2724,17 @@ PUGI_IMPL_NS_BEGIN
+ 			{
+ 				PUGI_IMPL_SCANWHILE_UNROLL(!PUGI_IMPL_IS_CHARTYPE(ss, ct_parse_pcdata));
+
++        // ####################################### DST Mod #######################################
++        #ifdef enable_dst_modifications
++        if (*s == '<' && s[1] == '!') // Embedded comment. Blank if not required.
++        {
++          PUGI__IGNOREUNTIL( s[0] == '-' && s[1] == '-' && s[2] == '>', (optmsk & parse_comments));
++          PUGI__IGNORENEXT( 3, (optmsk & parse_comments));  // "-->"
++        }
++        else
++        #endif
++        // ##################################### End DST Mod #####################################
++
+ 				if (*s == '<') // PCDATA ends here
+ 				{
+ 					char_t* end = g.flush(s);
+@@ -3481,7 +3513,13 @@ PUGI_IMPL_NS_BEGIN
+ 					{
+ 						char_t* parsed_pcdata = s;
+
+-						s = strconv_pcdata(s);
++            // ####################################### DST Mod #######################################
++            #ifdef enable_dst_modifications
++            s = strconv_pcdata(s, optmsk);
++            #else
++            s = strconv_pcdata(s);
++            #endif
++            // ##################################### End DST Mod #####################################
+
+ 						if (PUGI_IMPL_OPTSET(parse_embed_pcdata) && cursor->parent && !cursor->first_child && !cursor->value)
+ 						{
+@@ -3511,6 +3549,14 @@ PUGI_IMPL_NS_BEGIN
+ 							cursor = prev_cursor; // Pop since this is a standalone.
+ 						}
+
++            // ####################################### DST Mod #######################################
++            #ifdef enable_dst_modifications
++            s = strconv_pcdata(s, optmsk);
++            #else
++            s = strconv_pcdata(s);
++            #endif
++            // ##################################### End DST Mod #####################################
++
+ 						if (!*s) break;
+ 					}
+ 					else

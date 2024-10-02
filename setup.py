@@ -174,7 +174,7 @@ setup(
     version="0.3.1",
     author="Alwin Wang",
     author_email="16846521+AlwinW@users.noreply.github.com",
-    url="https://github.com/alwinw/pyJanus",
+    url="https://github.com/Boeing/pyjanus",
     description="python bindings for Janus",
     long_description=long_description,
     long_description_content_type="text/markdown",

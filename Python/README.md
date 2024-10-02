@@ -82,6 +82,10 @@ jv_input00 = jvm[jInput00]
 jv_output00 = jvm[jOutput00]
 ```
 
+## Testing
+
+Tests can be run by calling `python -m pytest` from the root directory.
+
 ## Release
 
 ```sh

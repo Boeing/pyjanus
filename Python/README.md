@@ -19,7 +19,7 @@ You can also build the the standalone `pyd` file without using `pip`.
 ```sh
 rm -rf build
 mkdir build
-cmake . -B build -DBUILD_PYBINDINGS=ON -DPY_VERSION_INFO=dev -DBUILD_EXAMPLES=ON
+cmake . -B build -DBUILD_PYBINDINGS=ON -DSKBUILD_PROJECT_VERSION=dev -DBUILD_EXAMPLES=ON
 cmake --build build -j8 --config Release
 ```
 

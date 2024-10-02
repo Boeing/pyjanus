@@ -23,7 +23,10 @@
 #
 
 cmake_minimum_required(VERSION 3.4)
-project(pyJanus)
+project(
+  pyJanus
+  VERSION ${SKBUILD_PROJECT_VERSION}
+  LANGUAGES CXX)
 
 add_subdirectory(pybind11)
 pybind11_add_module(pyJanus
@@ -38,5 +41,5 @@ pybind11_add_module(pyJanus
 target_link_libraries(pyJanus PUBLIC Janus)
 
 target_compile_definitions(
-  pyJanus PRIVATE VERSION_INFO=${PY_VERSION_INFO}
+  pyJanus PRIVATE VERSION_INFO=${PROJECT_VERSION}
 )

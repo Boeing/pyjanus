@@ -1,4 +1,4 @@
-# Adapted from https://github.com/pybind/cmake_example
+# Adapted from https://github.com/pybind/scikit_build_example
 
 #
 # Copyright (c) 2016 The Pybind Development Team, All rights reserved.
@@ -40,26 +40,24 @@
 #
 
 [build-system]
-requires = ["setuptools>=42", "wheel", "ninja", "cmake>=3.12"]
-build-backend = "setuptools.build_meta"
-
-[tool.isort]
-profile = "black"
+requires = ["scikit-build-core>=0.3.3", "pybind11"]
+build-backend = "scikit_build_core.build"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = ["-ra", "--showlocals", "--strict-markers", "--strict-config", "-v"]
+addopts = ["-ra", "--showlocals", "--strict-markers", "--strict-config"]
 xfail_strict = true
-filterwarnings = ["error"]
+log_cli_level = "INFO"
+filterwarnings = ["error", "ignore::pytest.PytestCacheWarning"]
 testpaths = ["Python/tests"]
 
 [tool.cibuildwheel]
-build-verbosity = 1
+build-frontend = "build[uv]"
 test-command = "pytest {project}/Python/tests"
 test-extras = ["test"]
-test-skip = ["*universal2:arm64"]
-# Setuptools bug causes collision between pypy and cpython artifacts
-before-build = "rm -rf {project}/build"
+
+[tool.ruff]
+src = ["Python"]
 
 [tool.commitizen]
 version = "0.3.1"
